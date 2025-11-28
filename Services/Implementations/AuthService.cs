@@ -20,13 +20,13 @@ namespace MegaBlogAPI.Services.Implementation
 
         }
 
-        async Task<LoginResult> IAuthService.Login(LoginDto loginDto)
+        async Task<AuthResponse> IAuthService.Login(LoginDto loginDto)
         {
             var userExists = _blogDbContext.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 
             if (userExists == null)
             {
-                return new LoginResult(false, "User with this email doesn't exist", null);
+                return new AuthResponse(false, "User with this email doesn't exist", null);
             }
 
             var authenticatedUser = await _blogDbContext.Users.FirstOrDefaultAsync(u => u.Password == loginDto.Password);
@@ -34,23 +34,29 @@ namespace MegaBlogAPI.Services.Implementation
 
             if(authenticatedUser == null)
             {
-                return new LoginResult(false, "Email or password incorrect", null);
+                return new AuthResponse(false, "Email or password incorrect", null);
             }
 
 
-            return new LoginResult(true, "Login Successfull", authenticatedUser);
+            return new AuthResponse(true, "Login Successfull", authenticatedUser);
 
         }
 
-        Task<User> IAuthService.SignUp(SignUpDTO signUpDTO)
+        async Task<AuthResponse> IAuthService.SignUp(SignUpDTO signUpDTO)
         {
             var userExists = _blogDbContext.Users.FirstOrDefaultAsync(u => signUpDTO.Email == u.Email);
 
             if (userExists != null)
             {
-
+                return new AuthResponse(false, "User already exists", null);
             }
-            
+
+
+            return new AuthResponse(true, "adfa", null);
+            //_blogDbContext.Users.AddAsync()
+
+
+
 
         }
     }

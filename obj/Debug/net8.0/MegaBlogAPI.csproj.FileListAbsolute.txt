@@ -136,4 +136,4 @@ C:\Users\ashutosh.verma\Documents\Codes\MegaBlogAPI\MegaBlogAPI\obj\Debug\net8.0
 C:\Users\ashutosh.verma\Documents\Codes\MegaBlogAPI\MegaBlogAPI\obj\Debug\net8.0\MegaBlogAPI.pdb
 C:\Users\ashutosh.verma\Documents\Codes\MegaBlogAPI\MegaBlogAPI\obj\Debug\net8.0\MegaBlogAPI.genruntimeconfig.cache
 C:\Users\ashutosh.verma\Documents\Codes\MegaBlogAPI\MegaBlogAPI\obj\Debug\net8.0\ref\MegaBlogAPI.dll
-C:\Users\ashutosh.verma\Documents\Codes\MegaBlogAPI\MegaBlogAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\ashutosh.verma\Documents\Codes\MegaBlogAPI\MegaBlogAPI\obj\Debug\net8.0\MegaBlogAPI.sourcelink.json

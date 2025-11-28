@@ -20,20 +20,20 @@ namespace MegaBlogAPI.Controllers
             _authService = authService;
         } 
 
-        [HttpPost("signup")]
-        public Task<IActionResult> SignUp([FromBody] User user)
-        {
+        //[HttpPost("signup")]
+        //public Task<IActionResult> SignUp([FromBody] User user)
+        //{
 
 
-            //return Ok("adsf");
-        }
+        //    //return Ok("adsf");
+        //}
 
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDTO)
         {
 
-            LoginResult result = await _authService.Login(loginDTO);
+            AuthResponse result = await _authService.Login(loginDTO);
 
             if (result.Success) {
                 return Ok(result);

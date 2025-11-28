@@ -7,7 +7,7 @@ namespace MegaBlogAPI.Services.Interface
 {
     public interface IAuthService
     {
-        Task<LoginResult> Login(LoginDto loginDto);
-        Task<User> SignUp(SignUpDTO signUpDTO);
+        Task<AuthResponse> Login(LoginDto loginDto);
+        Task<AuthResponse> SignUp(SignUpDTO signUpDTO);
     }
 }

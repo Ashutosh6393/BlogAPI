@@ -2,7 +2,7 @@
 
 namespace MegaBlogAPI.DTO.ReturnTypes
 {
-    public record LoginResult(bool Success, string Message, User? user);
+    public record AuthResponse(bool Success, string Message, User? user);
 
 
 }
