@@ -1,5 +1,3 @@
-
-
 using System.ComponentModel.DataAnnotations;
 
 namespace MegaBlogAPI.DTO
@@ -8,7 +6,7 @@ namespace MegaBlogAPI.DTO
     {
         [Required]
         [EmailAddress]
-        public required string  Email { get; set; }
+        public required string Email { get; set; }
 
         [Required]
         [MinLength(6)]

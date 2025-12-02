@@ -1,16 +1,15 @@
-
-
+using MegaBlogAPI.DTO;
+using MegaBlogAPI.DTO.ReturnTypes;
 using MegaBlogAPI.Models;
 
 namespace MegaBlogAPI.Services.Interface
 {
-    interface IPostService
+    public interface IPostService
     {
-        Task<Post> AddPost(Post post);
-        Task<bool> DeletePost(int id);
-        Task<bool> UpdatePost(Post post);
-        Task<IEnumerable<Post>> GetAllPosts();
-        Task<Post> GetPostById();
-
+        Task<MessageResponse> AddPost(PostInputDTO postInputDTO);
+        Task<MessageResponse> DeletePost(int id);
+        Task<MessageResponse> UpdatePost(UpdatePostDTO updatePostDTO);
+        Task<PostListResponse> GetAllPosts();
+        Task<PostResponse> GetPostById(int id);
     }
 }

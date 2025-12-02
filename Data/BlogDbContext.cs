@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MegaBlogAPI.Models;
+﻿using MegaBlogAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MegaBlogAPI.Data
 {
     public class BlogDbContext : DbContext
     {
-        public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
-        { }
+        public BlogDbContext(DbContextOptions<BlogDbContext> options)
+            : base(options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -14,10 +14,8 @@ namespace MegaBlogAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<User>(entity =>
             {
-
                 entity.HasIndex(e => e.Email).IsUnique();
 
                 // user -> post (one to many)
@@ -33,8 +31,6 @@ namespace MegaBlogAPI.Data
                     .WithOne(e => e.User)
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.Restrict);
-                    
-
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -47,6 +43,5 @@ namespace MegaBlogAPI.Data
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }
-
     }
 }

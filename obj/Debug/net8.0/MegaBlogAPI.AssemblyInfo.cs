@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MegaBlogAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c15765381448368dcccf32bf0a252a581c72551f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6a450f505f5a8bf507413ad70edabb40bbf4288")]
 [assembly: System.Reflection.AssemblyProductAttribute("MegaBlogAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MegaBlogAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

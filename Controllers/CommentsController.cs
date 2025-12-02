@@ -5,7 +5,5 @@ namespace MegaBlogAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentsController : ControllerBase
-    {
-    }
+    public class CommentsController : ControllerBase { }
 }

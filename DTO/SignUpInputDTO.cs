@@ -1,9 +1,6 @@
-
-
 using System.ComponentModel.DataAnnotations;
 
 namespace MegaBlogAPI.DTO
-
 {
     public class SignUpInputDTO
     {
@@ -19,6 +16,5 @@ namespace MegaBlogAPI.DTO
         [MinLength(6)]
         public required string Password { get; set; }
 
-        
     }
 }
