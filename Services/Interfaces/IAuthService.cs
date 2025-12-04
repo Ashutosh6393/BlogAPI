@@ -8,8 +8,7 @@ namespace MegaBlogAPI.Services.Interface
     {
         Task<AuthResponse> Login(LoginInputDto loginDto);
         Task<AuthResponse> SignUp(SignUpInputDTO signUpDTO);
-        string GenerateJwt(string email, string name);
+        string GenerateJwt(string email, string name, int userId);
 
-        //Task<AuthResponse> SignOut();
     }
 }

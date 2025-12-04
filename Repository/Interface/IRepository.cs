@@ -1,6 +1,6 @@
 using System;
 
-namespace MegaBlogAPI.Repository
+namespace MegaBlogAPI.Repository.Interface
 {
     public interface IRepository<T>
         where T : class
@@ -8,7 +8,7 @@ namespace MegaBlogAPI.Repository
         //CRUD
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
-        Task AddAsync(T obj);
+        Task<T> AddAsync(T obj);
         Task UpdateAsync(T obj);
         Task DeleteAsync(int id);
     }

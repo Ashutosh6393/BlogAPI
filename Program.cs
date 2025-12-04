@@ -1,10 +1,14 @@
 ﻿using MegaBlogAPI.Data;
-using MegaBlogAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using MegaBlogAPI.Services.Interface;
+using MegaBlogAPI;
+using MegaBlogAPI.Services.Implementation;
+using MegaBlogAPI.Repository.Interface;
+using MegaBlogAPI.Repository.Implementation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -47,8 +51,9 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
-
-
+builder.Services.AddScoped(typeof(IPostRepository), typeof(PostRepository));
+builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
+builder.Services.AddScoped(typeof(IPostService), typeof(PostService));
 builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddControllers();

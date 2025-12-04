@@ -1,0 +1,118 @@
+[
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDTO",
+        "Type": "MegaBlogAPI.DTO.LoginInputDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.AuthController",
+    "Method": "Signout",
+    "RelativePath": "api/auth/signout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.AuthController",
+    "Method": "SignUp",
+    "RelativePath": "api/auth/signup",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "signUpInputDTO",
+        "Type": "MegaBlogAPI.DTO.SignUpInputDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.PostController",
+    "Method": "GetPostById",
+    "RelativePath": "api/post/{postId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "postId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.PostController",
+    "Method": "CreateNewPost",
+    "RelativePath": "api/post/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "postInputDTO",
+        "Type": "MegaBlogAPI.DTO.PostInputDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.PostController",
+    "Method": "Delete",
+    "RelativePath": "api/post/delete/{postId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "postId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.PostController",
+    "Method": "GetAllPost",
+    "RelativePath": "api/post/getAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MegaBlogAPI.Controllers.PostController",
+    "Method": "UpdatePost",
+    "RelativePath": "api/post/update",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatePostDTO",
+        "Type": "MegaBlogAPI.DTO.UpdatePostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

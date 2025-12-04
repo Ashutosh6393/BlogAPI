@@ -2,7 +2,7 @@ using MegaBlogAPI.Data;
 using MegaBlogAPI.DTO;
 using MegaBlogAPI.DTO.ReturnTypes;
 using MegaBlogAPI.Models;
-using MegaBlogAPI.Repository;
+using MegaBlogAPI.Repository.Interface;
 using MegaBlogAPI.Services;
 using MegaBlogAPI.Services.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -29,15 +29,16 @@ namespace MegaBlogAPI.Services.Implementation
             _config = config;
         }
 
-        public string GenerateJwt(string email, string name)
+        public string GenerateJwt(string email, string name, int userId)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Name, name),
-            new Claim(JwtRegisteredClaimNames.Email, email)
+            new Claim("Name", name),
+            new Claim("Email", email),
+            new Claim("UserId", userId.ToString())
         };
 
             var token = new JwtSecurityToken(
@@ -51,11 +52,16 @@ namespace MegaBlogAPI.Services.Implementation
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public Task<AuthResponse> SignOut()
+        {
+            throw new NotImplementedException();
+        }
+
         async Task<AuthResponse> IAuthService.Login(LoginInputDto loginDto)
         {
             try
             {
-                User userExists = await _userRepository2.GetByEmailAsync(loginDto.Email);
+                var userExists = await _userRepository2.GetByEmailAsync(loginDto.Email);
                 if (userExists == null)
                 {
                     return new AuthResponse(false, "User with this email doesn't exist", null);
@@ -66,8 +72,9 @@ namespace MegaBlogAPI.Services.Implementation
                     return new AuthResponse(false, "Email or password incorrect", null);
                 }
 
+                var token = GenerateJwt(userExists.Email, userExists.Name, userExists.UserId);
 
-                return new AuthResponse(true, "Login Successfull", new AuthUserResponseDTO { Email = userExists.Email, Name = userExists.Name });
+                return new AuthResponse(true, "Login Successfull", token);
 
             }
             catch (Exception ex)
@@ -97,15 +104,14 @@ namespace MegaBlogAPI.Services.Implementation
                     Password = hashedPassword,
                 };
 
-                await _userRepository.AddAsync(newUser);
-                await _blogDbContext.SaveChangesAsync();
+                var result = await _userRepository.AddAsync(newUser);
 
-                //TODO: sign new jwt and sent to attach to dto
+                var token = GenerateJwt(signUpDTO.Email, signUpDTO.Name, result.UserId);
 
                 return new AuthResponse(
                     true,
                     "Signup successfull",
-                    new AuthUserResponseDTO { Email = newUser.Email, Name = newUser.Name }
+                    token
                 );
             }
             catch (Exception ex)
@@ -114,6 +120,7 @@ namespace MegaBlogAPI.Services.Implementation
                 return new AuthResponse(false, "Error signing up", null);
             }
         }
+
 
 
     }

@@ -4,32 +4,38 @@ using MegaBlogAPI.Data;
 using MegaBlogAPI.DTO;
 using MegaBlogAPI.DTO.ReturnTypes;
 using MegaBlogAPI.Models;
-using MegaBlogAPI.Repository;
+using MegaBlogAPI.Repository.Interface;
 using MegaBlogAPI.Services.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MegaBlogAPI
 {
     public class PostService : IPostService
     {
-        private readonly IRepository<Post> _postRepository;
+        private readonly IPostRepository _postRepository;
         private readonly BlogDbContext _blogDbContext;
-        public PostService(IRepository<Post> postRepository, BlogDbContext blogDbContext)
+        public PostService(IPostRepository postRepository, BlogDbContext blogDbContext)
         {
             _postRepository = postRepository;
             _blogDbContext = blogDbContext;
         }
-        public async Task<MessageResponse> AddPost(PostInputDTO postInputDTO)
+        public async Task<MessageResponse> AddPost(PostInputDTO postInputDTO, ClaimsPrincipal User)
         {
             try
             {
+
+                var email = User.FindFirst("Email")?.Value;
+                var userId = int.Parse(User.FindFirst("UserId")?.Value!);
+
+
                 Post newPost = new Post
                 {
                     Title = postInputDTO.Title,
                     Content = postInputDTO.Content,
                     CreatedAt = DateTime.UtcNow,
                     LastUpdatedAt = DateTime.UtcNow,
-                    UserId = postInputDTO.UserId,
+                    UserId = userId,
                 };
 
                 await _postRepository.AddAsync(newPost);
@@ -67,6 +73,12 @@ namespace MegaBlogAPI
             try
             {
                 var result = await _postRepository.GetAllAsync();
+
+                //PostResponseDTO postResponseDTO = new PostResponseDTO
+                //{
+                //    PostId = result.Count().
+                //}
+
                 return new PostListResponse(Success: true, Message: "All post fetched", result);
 
             }
@@ -75,6 +87,7 @@ namespace MegaBlogAPI
                 Console.WriteLine(ex.Message);
                 return new PostListResponse(Success: false, Message: "Error fetching posts", null);
             }
+
         }
 
         async public Task<PostResponse> GetPostById(int id)
@@ -82,14 +95,40 @@ namespace MegaBlogAPI
             try
             {
                 var post = await _postRepository.GetByIdAsync(id);
-                return new PostResponse(Success: true, Message: "Post fetched", post);
+
+
+                if (post == null)
+                {
+                    return new PostResponse(Success: false, Message: "No post found", null);
+
+                }
+
+                PostResponseDTO newPostRes = new PostResponseDTO
+                {
+                    PostId = post.PostId,
+                    Title = post.Title,
+                    Content = post.Content,
+                    CreatedAt = post.CreatedAt,
+                    LastUpdatedAt = post.LastUpdatedAt,
+                    UserName = post.User.Name,
+                    UserEmail = post.User.Email,
+                    Comments = post.Comment.Select(c => new CommentDTO
+                    {
+                        CommentId = c.CommentId,
+                        Text = c.Text,
+                        CreatedAt = c.CreatedAt,
+                        CreatedBy = c.User.Name
+
+                    }).ToList()
+                };
+
+                return new PostResponse(Success: true, Message: "Post fetched", newPostRes);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return new PostResponse(Success: true, Message: ex.Message, null);
             }
-
         }
 
         public async Task<MessageResponse> UpdatePost(UpdatePostDTO updatePostDTO)

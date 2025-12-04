@@ -1,8 +1,9 @@
 using MegaBlogAPI.Data;
+using MegaBlogAPI.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace MegaBlogAPI.Repository
+namespace MegaBlogAPI.Repository.Implementation
 {
     class Repository<T> : IRepository<T>
         where T : class
@@ -26,9 +27,11 @@ namespace MegaBlogAPI.Repository
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task AddAsync(T obj)
+        public async Task<T> AddAsync(T obj)
         {
-            await _dbSet.AddAsync(obj);
+            var entity =  await _dbSet.AddAsync(obj);
+            await _context.SaveChangesAsync();
+            return entity.Entity;
         }
 
         public async Task UpdateAsync(T obj)

@@ -18,7 +18,5 @@ namespace MegaBlogAPI.DTO
         [MinLength(100)]
         public required string Content { get; set; }
 
-        [Required]
-        public required int UserId { get; set; }
     }
 }

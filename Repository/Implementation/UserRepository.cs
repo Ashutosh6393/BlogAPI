@@ -1,16 +1,15 @@
 ﻿using MegaBlogAPI.Data;
 using MegaBlogAPI.Models;
+using MegaBlogAPI.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace MegaBlogAPI.Repository
+namespace MegaBlogAPI.Repository.Implementation
 {
     public class UserRepository : IUserRepository
     {
-        private readonly BlogDbContext _context;
         private readonly DbSet<User> _dbSet;
         public UserRepository(BlogDbContext context)
         {
-            _context = context;
             _dbSet = context.Set<User>();
 
         }

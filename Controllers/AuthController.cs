@@ -2,9 +2,7 @@
 using MegaBlogAPI.DTO;
 using MegaBlogAPI.DTO.ReturnTypes;
 using MegaBlogAPI.Models;
-using MegaBlogAPI.Services.Implementation;
 using MegaBlogAPI.Services.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MegaBlogAPI.Controllers
@@ -21,49 +19,50 @@ namespace MegaBlogAPI.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp([FromBody] SignUpInputDTO signUpInputDTO)
+        public async Task<IActionResult> SignUp(SignUpInputDTO signUpInputDTO)
         {
             AuthResponse result = await _authService.SignUp(signUpInputDTO);
 
-            if (result.Success)
+            if (result.Success && result.Token != null)
             {
-                // attach jwt to cookie or send as response
-
-                var token = _authService.GenerateJwt(result.AuthUserResponseDTO!.Email, result.AuthUserResponseDTO.Name);
-                Response.Cookies.Append("jwt", token, new CookieOptions
+                Response.Cookies.Append("jwt", result.Token, new CookieOptions
                 {
                     HttpOnly = true,
                     Secure = true,
                     Expires = DateTimeOffset.UtcNow.AddHours(1)
                 });
 
-
-                return Ok(new { message = "Signup successful", token });
+                return Ok(new { message = "Signup successful", result.Token });
             }
 
-            return BadRequest();
+            return BadRequest(result);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginInputDto loginDTO)
+        public async Task<IActionResult> Login(LoginInputDto loginDTO)
         {
             AuthResponse result = await _authService.Login(loginDTO);
 
             if (result.Success)
             {
-                var token = _authService.GenerateJwt(result.AuthUserResponseDTO!.Email, result.AuthUserResponseDTO.Name);
-                Response.Cookies.Append("jwt", token, new CookieOptions
+                Response.Cookies.Append("jwt", result.Token!, new CookieOptions
                 {
                     HttpOnly = true,
                     Secure = true,
                     Expires = DateTimeOffset.UtcNow.AddHours(1)
                 });
 
-                return Ok(new { message = "Login successful", token });
+                return Ok(new { message = "Login successful", result.Token });
             }
+            return Unauthorized(result);
 
-            return Unauthorized();
+        }
 
+        [HttpPost("signout")]
+        public IActionResult Signout()
+        {
+            Response.Cookies.Delete("jwt");
+            return Ok(new AuthResponse(true, "Signout successfull", null));
         }
     }
 }

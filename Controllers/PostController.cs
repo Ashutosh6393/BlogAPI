@@ -1,8 +1,9 @@
-﻿using MegaBlogAPI.Services.Interface;
+﻿using MegaBlogAPI.DTO;
+using MegaBlogAPI.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MegaBlogAPI.DTO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MegaBlogAPI.Controllers
@@ -16,7 +17,6 @@ namespace MegaBlogAPI.Controllers
     {
 
         private IPostService _postService;
-
         public PostController(IPostService postservice)
         {
             _postService = postservice;
@@ -30,14 +30,11 @@ namespace MegaBlogAPI.Controllers
 
             if (!result.Success)
             {
-                return NotFound();
+                return NotFound(result);
             }
 
             return Ok(result);
         }
-
-
-
 
         [HttpGet("{postId}")]
         public async Task<IActionResult> GetPostById(int postId)
@@ -46,7 +43,7 @@ namespace MegaBlogAPI.Controllers
 
             if (!result.Success)
             {
-                return NotFound();
+                return NotFound(result);
             }
 
             return Ok(result);
@@ -56,7 +53,7 @@ namespace MegaBlogAPI.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateNewPost([FromBody] PostInputDTO postInputDTO)
         {
-            var result = await _postService.AddPost(postInputDTO);
+            var result = await _postService.AddPost(postInputDTO, User);
 
             if (!result.Success)
             {
@@ -64,7 +61,7 @@ namespace MegaBlogAPI.Controllers
             }
 
             return Created("OK", result);
-
+                    
         }
 
         [Authorize]
@@ -92,11 +89,6 @@ namespace MegaBlogAPI.Controllers
             {
                 return BadRequest(result);
             }
-
-
-
-
-
 
             return Ok(result);
         }
