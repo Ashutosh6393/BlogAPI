@@ -1,9 +1,7 @@
-
-
-namespace MegaBlogAPI.DTO
+namespace MegaBlogAPI.DTO.ControllerInputDTO
 {
 
-    public class UpdatePostDTO
+    public class UpdatePostInputDTO
     {
         public required int postId { get; set; }
         public required string title { get; set; }

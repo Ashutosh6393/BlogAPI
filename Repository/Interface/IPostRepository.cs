@@ -10,5 +10,7 @@ namespace MegaBlogAPI.Repository.Interface
         Task<Post> AddAsync(Post obj);
         Task UpdateAsync(Post obj);
         Task DeleteAsync(int id);
+        Task<IEnumerable<Post>?> GetAllUserPosts(int userId);
+
     }
 }

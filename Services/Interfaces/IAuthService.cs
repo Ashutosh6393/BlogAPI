@@ -1,14 +1,13 @@
 using MegaBlogAPI.DTO;
-using MegaBlogAPI.DTO.ReturnTypes;
+using MegaBlogAPI.DTO.ControllerInputDTO;
 using MegaBlogAPI.Models;
 
 namespace MegaBlogAPI.Services.Interface
 {
     public interface IAuthService
     {
-        Task<AuthResponse> Login(LoginInputDto loginDto);
-        Task<AuthResponse> SignUp(SignUpInputDTO signUpDTO);
+        Task<AuthServiceResponse> Login(LoginInputDTO loginDto);
+        Task<AuthServiceResponse> SignUp(SignupInputDTO signUpDTO);
         string GenerateJwt(string email, string name, int userId);
-
     }
 }

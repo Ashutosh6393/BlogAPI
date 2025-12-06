@@ -1,9 +1,6 @@
-
-
-
 using System.ComponentModel.DataAnnotations;
 
-namespace MegaBlogAPI.DTO
+namespace MegaBlogAPI.DTO.ControllerInputDTO
 {
 
     public class PostInputDTO

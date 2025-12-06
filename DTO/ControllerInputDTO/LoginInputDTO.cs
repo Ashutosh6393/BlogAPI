@@ -1,13 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MegaBlogAPI.DTO
+namespace MegaBlogAPI.DTO.ControllerInputDTO
 {
-    public class SignUpInputDTO
+    public class LoginInputDTO
     {
-        [Required]
-        [MinLength(2)]
-        public required string Name { get; set; }
-
         [Required]
         [EmailAddress]
         public required string Email { get; set; }
@@ -15,6 +11,5 @@ namespace MegaBlogAPI.DTO
         [Required]
         [MinLength(6)]
         public required string Password { get; set; }
-
     }
 }

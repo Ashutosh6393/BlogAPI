@@ -14,17 +14,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignUpInputDTO"
+                "$ref": "#/components/schemas/SignupInputDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignUpInputDTO"
+                "$ref": "#/components/schemas/SignupInputDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SignUpInputDTO"
+                "$ref": "#/components/schemas/SignupInputDTO"
               }
             }
           }
@@ -45,17 +45,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginInputDto"
+                "$ref": "#/components/schemas/LoginInputDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginInputDto"
+                "$ref": "#/components/schemas/LoginInputDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginInputDto"
+                "$ref": "#/components/schemas/LoginInputDTO"
               }
             }
           }
@@ -154,17 +154,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdatePostDTO"
+                "$ref": "#/components/schemas/UpdatePostInputDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdatePostDTO"
+                "$ref": "#/components/schemas/UpdatePostInputDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdatePostDTO"
+                "$ref": "#/components/schemas/UpdatePostInputDTO"
               }
             }
           }
@@ -202,7 +202,7 @@
   },
   "components": {
     "schemas": {
-      "LoginInputDto": {
+      "LoginInputDTO": {
         "required": [
           "email",
           "password"
@@ -241,7 +241,7 @@
         },
         "additionalProperties": false
       },
-      "SignUpInputDTO": {
+      "SignupInputDTO": {
         "required": [
           "email",
           "name",
@@ -265,7 +265,7 @@
         },
         "additionalProperties": false
       },
-      "UpdatePostDTO": {
+      "UpdatePostInputDTO": {
         "required": [
           "content",
           "postId",

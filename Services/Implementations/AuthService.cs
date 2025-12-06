@@ -1,6 +1,6 @@
 using MegaBlogAPI.Data;
 using MegaBlogAPI.DTO;
-using MegaBlogAPI.DTO.ReturnTypes;
+using MegaBlogAPI.DTO.ControllerInputDTO;
 using MegaBlogAPI.Models;
 using MegaBlogAPI.Repository.Interface;
 using MegaBlogAPI.Services;
@@ -36,8 +36,8 @@ namespace MegaBlogAPI.Services.Implementation
 
             var claims = new[]
             {
-            new Claim("Name", name),
-            new Claim("Email", email),
+            new Claim(ClaimTypes.Name, name),
+            new Claim(ClaimTypes.Email, email),
             new Claim("UserId", userId.ToString())
         };
 
@@ -52,47 +52,42 @@ namespace MegaBlogAPI.Services.Implementation
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public Task<AuthResponse> SignOut()
-        {
-            throw new NotImplementedException();
-        }
-
-        async Task<AuthResponse> IAuthService.Login(LoginInputDto loginDto)
+        async Task<AuthServiceResponse> IAuthService.Login(LoginInputDTO loginDto)
         {
             try
             {
                 var userExists = await _userRepository2.GetByEmailAsync(loginDto.Email);
                 if (userExists == null)
                 {
-                    return new AuthResponse(false, "User with this email doesn't exist", null);
+                    return new AuthServiceResponse(false, "User with this email doesn't exist", null);
                 }
 
                 if (!PasswordService.VerifyPassword(loginDto.Password, userExists.Password))
                 {
-                    return new AuthResponse(false, "Email or password incorrect", null);
+                    return new AuthServiceResponse(false, "Email or password incorrect", null);
                 }
 
                 var token = GenerateJwt(userExists.Email, userExists.Name, userExists.UserId);
 
-                return new AuthResponse(true, "Login Successfull", token);
+                return new AuthServiceResponse(true, "Login Successfull", token);
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return new AuthResponse(false, "Some Error occured", null);
+                return new AuthServiceResponse(false, "Some Error occured", null);
 
             }
         }
 
-        async Task<AuthResponse> IAuthService.SignUp(SignUpInputDTO signUpDTO)
+        async Task<AuthServiceResponse> IAuthService.SignUp(SignupInputDTO signUpDTO)
         {
             try
             {
                 var userExists = await _userRepository2.GetByEmailAsync(signUpDTO.Email);
                 if (userExists != null)
                 {
-                    return new AuthResponse(false, "User already exists", null);
+                    return new AuthServiceResponse(false, "User already exists", null);
                 }
 
                 string hashedPassword = PasswordService.HashPassword(signUpDTO.Password);
@@ -108,7 +103,7 @@ namespace MegaBlogAPI.Services.Implementation
 
                 var token = GenerateJwt(signUpDTO.Email, signUpDTO.Name, result.UserId);
 
-                return new AuthResponse(
+                return new AuthServiceResponse(
                     true,
                     "Signup successfull",
                     token
@@ -117,11 +112,8 @@ namespace MegaBlogAPI.Services.Implementation
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return new AuthResponse(false, "Error signing up", null);
+                return new AuthServiceResponse(false, "Error signing up", null);
             }
         }
-
-
-
     }
 }

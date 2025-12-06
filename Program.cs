@@ -1,22 +1,30 @@
-﻿using MegaBlogAPI.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
-using MegaBlogAPI.Services.Interface;
+﻿using System.Text;
 using MegaBlogAPI;
-using MegaBlogAPI.Services.Implementation;
+using MegaBlogAPI.Data;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using MegaBlogAPI.Services.Interface;
 using MegaBlogAPI.Repository.Interface;
+using MegaBlogAPI.Services.Implementation;
 using MegaBlogAPI.Repository.Implementation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MegaBlogAPI.Services.Interfaces;
+using MegaBlogAPI.Services.Implementations;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
+
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddMemoryCache();
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,11 +59,13 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
+builder.Services.AddScoped(typeof(IUserClaimsService), typeof(UserClaimsService));
+builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IPostRepository), typeof(PostRepository));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
 builder.Services.AddScoped(typeof(IPostService), typeof(PostService));
-builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

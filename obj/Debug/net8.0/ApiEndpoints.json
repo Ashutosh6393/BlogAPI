@@ -8,8 +8,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "loginDTO",
-        "Type": "MegaBlogAPI.DTO.LoginInputDto",
+        "Name": "dto",
+        "Type": "MegaBlogAPI.DTO.ControllerInputDTO.LoginInputDTO",
         "IsRequired": true
       }
     ],
@@ -34,8 +34,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "signUpInputDTO",
-        "Type": "MegaBlogAPI.DTO.SignUpInputDTO",
+        "Name": "dto",
+        "Type": "MegaBlogAPI.DTO.ControllerInputDTO.SignupInputDTO",
         "IsRequired": true
       }
     ],
@@ -66,8 +66,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "postInputDTO",
-        "Type": "MegaBlogAPI.DTO.PostInputDTO",
+        "Name": "dto",
+        "Type": "MegaBlogAPI.DTO.ControllerInputDTO.PostInputDTO",
         "IsRequired": true
       }
     ],
@@ -108,8 +108,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "updatePostDTO",
-        "Type": "MegaBlogAPI.DTO.UpdatePostDTO",
+        "Name": "dto",
+        "Type": "MegaBlogAPI.DTO.ControllerInputDTO.UpdatePostInputDTO",
         "IsRequired": true
       }
     ],

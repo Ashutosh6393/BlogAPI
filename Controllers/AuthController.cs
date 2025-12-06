@@ -1,7 +1,5 @@
-﻿using System;
-using MegaBlogAPI.DTO;
-using MegaBlogAPI.DTO.ReturnTypes;
-using MegaBlogAPI.Models;
+﻿using MegaBlogAPI.DTO;
+using MegaBlogAPI.DTO.ControllerInputDTO;
 using MegaBlogAPI.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +17,9 @@ namespace MegaBlogAPI.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(SignUpInputDTO signUpInputDTO)
+        public async Task<IActionResult> SignUp(SignupInputDTO dto)
         {
-            AuthResponse result = await _authService.SignUp(signUpInputDTO);
+            AuthServiceResponse result = await _authService.SignUp(dto);
 
             if (result.Success && result.Token != null)
             {
@@ -39,9 +37,9 @@ namespace MegaBlogAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginInputDto loginDTO)
+        public async Task<IActionResult> Login(LoginInputDTO dto)
         {
-            AuthResponse result = await _authService.Login(loginDTO);
+            AuthServiceResponse result = await _authService.Login(dto);
 
             if (result.Success)
             {
@@ -62,7 +60,7 @@ namespace MegaBlogAPI.Controllers
         public IActionResult Signout()
         {
             Response.Cookies.Delete("jwt");
-            return Ok(new AuthResponse(true, "Signout successfull", null));
+            return Ok(new AuthServiceResponse(true, "Signout successfull", null));
         }
     }
 }

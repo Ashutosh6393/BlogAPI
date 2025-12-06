@@ -1,4 +1,4 @@
-﻿using MegaBlogAPI.DTO;
+﻿using MegaBlogAPI.DTO.ControllerInputDTO;
 using MegaBlogAPI.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -51,9 +51,9 @@ namespace MegaBlogAPI.Controllers
 
         [Authorize]
         [HttpPost("create")]
-        public async Task<IActionResult> CreateNewPost([FromBody] PostInputDTO postInputDTO)
+        public async Task<IActionResult> CreateNewPost(PostInputDTO dto)
         {
-            var result = await _postService.AddPost(postInputDTO, User);
+            var result = await _postService.AddPost(dto);
 
             if (!result.Success)
             {
@@ -61,14 +61,14 @@ namespace MegaBlogAPI.Controllers
             }
 
             return Created("OK", result);
-                    
+
         }
 
         [Authorize]
         [HttpPatch("update")]
-        public async Task<IActionResult> UpdatePost([FromBody] UpdatePostDTO updatePostDTO)
+        public async Task<IActionResult> UpdatePost(UpdatePostInputDTO dto)
         {
-            var result = await _postService.UpdatePost(updatePostDTO);
+            var result = await _postService.UpdatePost(dto);
 
             if (!result.Success)
             {
